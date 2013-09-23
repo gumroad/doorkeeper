@@ -35,6 +35,11 @@ module Doorkeeper
       token if token && ScopeChecker.matches?(token.scopes, scopes)
     end
 
+    def self.app_authorized_with_scopes?(application, resource_owner_id, scopes)
+      token = last_authorized_token_for(application, resource_owner_id)
+      token && token.scopes.has_scopes?(scopes)
+    end
+
     def token_type
       "bearer"
     end
